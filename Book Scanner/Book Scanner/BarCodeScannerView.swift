@@ -9,6 +9,7 @@ import SwiftUI
 import AVFoundation
 
 struct BarCodeScannerView: View {
+    
     @State private var captureSession: AVCaptureSession?
     @State private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     
@@ -32,13 +33,17 @@ struct BarCodeScannerView: View {
     
     var body: some View {
         ZStack {
-                VideoCaptureView(captureSession: $captureSession,
-                                 videoPreviewLayer: $videoPreviewLayer)
-                    .edgesIgnoringSafeArea(.all)
-                BarcodeOverlay(captureSession: $captureSession)
-                    .edgesIgnoringSafeArea(.all)
-            }
-            .onAppear(perform: startSession)
+            VideoCaptureView(
+                captureSession: $captureSession,
+                videoPreviewLayer: $videoPreviewLayer
+            )
+            .edgesIgnoringSafeArea(.all)
+            BarcodeOverlay(
+                captureSession: $captureSession
+            )
+            .edgesIgnoringSafeArea(.all)
+        }
+        .onAppear(perform: startSession)
     }
 }
 
@@ -54,18 +59,18 @@ struct BarcodeOverlay: View {
                     Text("Scan Barcode Here")
                         .foregroundColor(.white)
                         .font(.largeTitle)
-            )
-            .background(Color.black.opacity(0.5))
-            .cornerRadius(20)
-            .onTapGesture {
-                DispatchQueue.global(qos: .background).async {
-                    self.captureSession?.startRunning()
+                )
+                .background(Color.black.opacity(0.5))
+                .cornerRadius(20)
+                .onTapGesture {
+                    DispatchQueue.global(qos: .background).async {
+                        self.captureSession?.startRunning()
+                    }
+                    
                 }
-                
-            }
-            .onAppear {
-                self.captureSession?.stopRunning()
-            }
+                .onAppear {
+                    self.captureSession?.stopRunning()
+                }
         }
     }
 }
