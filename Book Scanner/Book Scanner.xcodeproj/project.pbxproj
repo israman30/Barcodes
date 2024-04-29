@@ -15,6 +15,9 @@
 		4D6B45AA2B1B7889003ABCAC /* Book_ScannerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6B45A92B1B7889003ABCAC /* Book_ScannerUITests.swift */; };
 		4D6B45AC2B1B7889003ABCAC /* Book_ScannerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6B45AB2B1B7889003ABCAC /* Book_ScannerUITestsLaunchTests.swift */; };
 		4D6B45BD2B20EBCD003ABCAC /* BarCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6B45BC2B20EBCD003ABCAC /* BarCodeScannerView.swift */; };
+		4D8EE8A82BE0662E00E5BD28 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8EE8A72BE0662E00E5BD28 /* Book.swift */; };
+		4D8EE8AA2BE0666100E5BD28 /* SearchBookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8EE8A92BE0666100E5BD28 /* SearchBookManager.swift */; };
+		4D8EE8AC2BE0669C00E5BD28 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8EE8AB2BE0669C00E5BD28 /* BarcodeScanner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		4D6B45AB2B1B7889003ABCAC /* Book_ScannerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book_ScannerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4D6B45BB2B1BB910003ABCAC /* Book-Scanner-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Book-Scanner-Info.plist"; sourceTree = SOURCE_ROOT; };
 		4D6B45BC2B20EBCD003ABCAC /* BarCodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarCodeScannerView.swift; sourceTree = "<group>"; };
+		4D8EE8A72BE0662E00E5BD28 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		4D8EE8A92BE0666100E5BD28 /* SearchBookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookManager.swift; sourceTree = "<group>"; };
+		4D8EE8AB2BE0669C00E5BD28 /* BarcodeScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,9 @@
 				4D6B45BB2B1BB910003ABCAC /* Book-Scanner-Info.plist */,
 				4D6B458E2B1B7888003ABCAC /* Book_ScannerApp.swift */,
 				4D6B45902B1B7888003ABCAC /* ContentView.swift */,
+				4D8EE8A92BE0666100E5BD28 /* SearchBookManager.swift */,
+				4D8EE8AB2BE0669C00E5BD28 /* BarcodeScanner.swift */,
+				4D8EE8A72BE0662E00E5BD28 /* Book.swift */,
 				4D6B45BC2B20EBCD003ABCAC /* BarCodeScannerView.swift */,
 				4D6B45922B1B7889003ABCAC /* Assets.xcassets */,
 				4D6B45942B1B7889003ABCAC /* Preview Content */,
@@ -266,7 +275,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D8EE8AA2BE0666100E5BD28 /* SearchBookManager.swift in Sources */,
+				4D8EE8A82BE0662E00E5BD28 /* Book.swift in Sources */,
 				4D6B45912B1B7888003ABCAC /* ContentView.swift in Sources */,
+				4D8EE8AC2BE0669C00E5BD28 /* BarcodeScanner.swift in Sources */,
 				4D6B458F2B1B7888003ABCAC /* Book_ScannerApp.swift in Sources */,
 				4D6B45BD2B20EBCD003ABCAC /* BarCodeScannerView.swift in Sources */,
 			);
