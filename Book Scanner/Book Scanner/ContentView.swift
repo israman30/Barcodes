@@ -33,36 +33,32 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-//            if ((foundBooks?.items.isEmpty) != nil) {
-//                ProgressView()
-//            } else {
-                Form {
-                    Section(header: Text("Books")) {
-                        Text("\(foundBooks?.items.first?.volumeInfo.title ?? "title")")
-                        Text("\(foundBooks?.items.first?.volumeInfo.subtitle ?? "No subtitle")")
-                        Text("by \(foundBooks?.items.first?.volumeInfo.authors?.first ?? "No author")")
-                    }
-                    Section(header: Text("Info")) {
-                        Text("\(foundBooks?.items.first?.volumeInfo.publishedDate ?? "Not Date")")
-                        Text("\(foundBooks?.items.first?.volumeInfo.pageCount ?? 0)")
-                        Text("Language: \(foundBooks?.items.first?.volumeInfo.language ?? "")")
-                        Text("ISBN: \(isbn ?? "")")
-                    }
+            Form {
+                Section(header: Text("Books")) {
+                    Text("\(foundBooks?.items.first?.volumeInfo.title ?? "Book Title")")
+                        .font(.title2)
+                    Text("\(foundBooks?.items.first?.volumeInfo.subtitle ?? "Subtitle")")
+                    Text("by \(foundBooks?.items.first?.volumeInfo.authors?.first ?? "Author")")
+                        .font(.callout)
                 }
-                .navigationTitle("Books")
-                .toolbar {
-                    Button {
-                        self.isPresented.toggle()
-                    } label: {
-                        Image(systemName: "barcode")
-                    }
-                    .sheet(isPresented: $isPresented, content: {
-                        BarCodeScanner(isbn: $isbn, foundBooks: $foundBooks)
-                    })
-
-//                }
+                Section(header: Text("Info")) {
+                    Text("\(foundBooks?.items.first?.volumeInfo.publishedDate ?? "Published date")")
+                    Text("\(foundBooks?.items.first?.volumeInfo.pageCount ?? 0)")
+                    Text("Lang: \(foundBooks?.items.first?.volumeInfo.language ?? "Language")")
+                    Text("ISBN: \(isbn ?? "ISBN")")
+                }
             }
-            
+            .navigationTitle("Books")
+            .toolbar {
+                Button {
+                    self.isPresented.toggle()
+                } label: {
+                    Image(systemName: "barcode")
+                }
+                .sheet(isPresented: $isPresented, content: {
+                    BarCodeScanner(isbn: $isbn, foundBooks: $foundBooks)
+                })
+            }
         }
     }
 }
@@ -74,7 +70,8 @@ struct ContentView: View {
 import UIKit
 import AVFoundation
 
-class SearchBookManager {
+final class SearchBookManager {
+    
     static let shred = SearchBookManager()
     
     func search(isbn: String, completion: @escaping (Books) -> Void) {
@@ -83,9 +80,6 @@ class SearchBookManager {
         let session = URLSession(configuration: sessionConfiguration)
         
         guard var url = URL(string: "https://www.googleapis.com/books/v1/volumes/") else { return }
-        let query = ["q":"isbn:\(isbn)"]
-        
-        let params = ["q":"isbn:\(isbn)"]
         
         url.append(queryItems: [URLQueryItem(name: "q", value: "isbn:\(isbn)")])
         
@@ -97,7 +91,7 @@ class SearchBookManager {
                 print("Error in url session")
                return
             }
-            guard let data = data else{ return }
+            guard let data = data else { return }
             do {
                 let bookData = try JSONDecoder().decode(Books.self, from: data)
                 completion(bookData)
@@ -106,7 +100,6 @@ class SearchBookManager {
             }
         }
         task.resume()
-        
     }
 }
 
@@ -123,8 +116,10 @@ struct BarCodeScanner: UIViewControllerRepresentable {
         viewController.view.backgroundColor = .black
         context.coordinator.captureSession = AVCaptureSession()
         
-        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { fatalError("Could not capture video")
+        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { 
+            fatalError("Could not capture video")
         }
+        
         let videoInput: AVCaptureDeviceInput
         videoInput = try! AVCaptureDeviceInput(device: videoCaptureDevice)
         
@@ -133,6 +128,7 @@ struct BarCodeScanner: UIViewControllerRepresentable {
         } else {
             print("Could not add input from session")
         }
+        
         let metadataOutput = AVCaptureMetadataOutput()
         
         if context.coordinator.captureSession.canAddOutput(metadataOutput) {
@@ -152,13 +148,10 @@ struct BarCodeScanner: UIViewControllerRepresentable {
             context.coordinator.captureSession.startRunning()
         }
         
-        
         return viewController
     }
     
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        
-    }
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -175,13 +168,14 @@ struct BarCodeScanner: UIViewControllerRepresentable {
         }
         
         func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-            guard let metadataObject = metadataObjects.first, let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else { return }
+            guard let metadataObject = metadataObjects.first,
+                  let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject,
+                  let stringValue = readableObject.stringValue else { return }
             
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             foundCode(of: stringValue)
             captureSession.stopRunning()
             parent.presentationMode.wrappedValue.dismiss()
-            
         }
         
         func foundCode(of isbn: String) {
@@ -189,9 +183,11 @@ struct BarCodeScanner: UIViewControllerRepresentable {
             parent.isbn = isbn
             
             // Search Book manager
-            SearchBookManager.shred.search(isbn: isbn) { books in
+            SearchBookManager.shred.search(isbn: isbn) { [weak self] books in
                 DispatchQueue.main.async {
-                    self.parent.foundBooks = books
+                    if let self {
+                        self.parent.foundBooks = books
+                    }
                 }
             }
         }
