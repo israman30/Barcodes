@@ -16,18 +16,22 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Books")) {
+                Section {
                     Text("\(foundBooks?.items.first?.volumeInfo.title ?? "Book Title")")
                         .font(.title2)
                     Text("\(foundBooks?.items.first?.volumeInfo.subtitle ?? "Subtitle")")
                     Text("by \(foundBooks?.items.first?.volumeInfo.authors?.first ?? "Author")")
                         .font(.callout)
+                } header: {
+                    Text("Books")
                 }
-                Section(header: Text("Info")) {
+                Section {
                     Text("\(foundBooks?.items.first?.volumeInfo.publishedDate ?? "Published date")")
                     Text("\(foundBooks?.items.first?.volumeInfo.pageCount ?? 0)")
                     Text("Lang: \(foundBooks?.items.first?.volumeInfo.language ?? "Language")")
                     Text("ISBN: \(isbn ?? "ISBN")")
+                } header: {
+                    Text("Info")
                 }
             }
             .navigationTitle("Books")
