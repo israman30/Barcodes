@@ -19,6 +19,7 @@
 		4D8EE8AA2BE0666100E5BD28 /* SearchBookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8EE8A92BE0666100E5BD28 /* SearchBookManager.swift */; };
 		4D8EE8AC2BE0669C00E5BD28 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8EE8AB2BE0669C00E5BD28 /* BarcodeScanner.swift */; };
 		4D8EE8AF2BE0797100E5BD28 /* BookScanner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4D8EE8AD2BE0797100E5BD28 /* BookScanner.xcdatamodeld */; };
+		4D8EE8B12BE07BC200E5BD28 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8EE8B02BE07BC200E5BD28 /* DataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		4D8EE8A92BE0666100E5BD28 /* SearchBookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookManager.swift; sourceTree = "<group>"; };
 		4D8EE8AB2BE0669C00E5BD28 /* BarcodeScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
 		4D8EE8AE2BE0797100E5BD28 /* BookScanner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BookScanner.xcdatamodel; sourceTree = "<group>"; };
+		4D8EE8B02BE07BC200E5BD28 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				4D6B45902B1B7888003ABCAC /* ContentView.swift */,
 				4D8EE8A92BE0666100E5BD28 /* SearchBookManager.swift */,
 				4D8EE8AB2BE0669C00E5BD28 /* BarcodeScanner.swift */,
+				4D8EE8B02BE07BC200E5BD28 /* DataController.swift */,
 				4D8EE8AD2BE0797100E5BD28 /* BookScanner.xcdatamodeld */,
 				4D8EE8A72BE0662E00E5BD28 /* Book.swift */,
 				4D6B45BC2B20EBCD003ABCAC /* BarCodeScannerView.swift */,
@@ -283,6 +286,7 @@
 				4D8EE8A82BE0662E00E5BD28 /* Book.swift in Sources */,
 				4D6B45912B1B7888003ABCAC /* ContentView.swift in Sources */,
 				4D8EE8AC2BE0669C00E5BD28 /* BarcodeScanner.swift in Sources */,
+				4D8EE8B12BE07BC200E5BD28 /* DataController.swift in Sources */,
 				4D6B458F2B1B7888003ABCAC /* Book_ScannerApp.swift in Sources */,
 				4D6B45BD2B20EBCD003ABCAC /* BarCodeScannerView.swift in Sources */,
 			);
