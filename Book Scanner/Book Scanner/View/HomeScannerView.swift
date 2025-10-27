@@ -52,7 +52,7 @@ struct HomeScannerView: View {
             VStack {
                 ScannerView(scannedCode: $scannedCodeString)
                     .frame(maxWidth: 300, minHeight: 20, maxHeight: 250)
-                Label("", image: scannedCodeString.isEmpty ? "barcode.viewfinder" : "barcode")
+                Image(systemName: scannedCodeString.isEmpty ? "barcode.viewfinder" : "barcode")
                     .contentTransition(.symbolEffect(.replace))
                     .font(.title2)
                     .fontDesign(.rounded)
