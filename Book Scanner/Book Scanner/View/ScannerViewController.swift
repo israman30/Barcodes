@@ -13,7 +13,7 @@ enum CameraError: String {
     case invalidScannedValue
 }
 
-protocol ScannerProtocol {
+protocol ScannerProtocol: AnyObject {
     func find(_ barcode: String)
     func surface(_ error: CameraError)
 }
@@ -22,7 +22,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     
     let captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
-    var scannerDelegate: ScannerProtocol?
+    weak var scannerDelegate: ScannerProtocol?
     
     init(scannerDelegate: ScannerProtocol) {
         super.init(nibName: nil, bundle: nil)
@@ -35,10 +35,21 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupCaptureSession()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard let previewLayer else {
+            scannerDelegate?.surface(.invalidDeviceInput)
+            return
+        }
+        previewLayer.frame = view.bounds
     }
     
     func setupCaptureSession() {
-        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
+        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else{
             scannerDelegate?.surface(.invalidDeviceInput)
             return
         }
@@ -51,7 +62,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             return
         }
         
-        if captureSession.canAddInput(videoInput) {
+        if captureSession.canAddInput(videoInput){
             captureSession.addInput(videoInput)
         } else {
             scannerDelegate?.surface(.invalidScannedValue)
@@ -60,20 +71,18 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         
         let metadataOutput = AVCaptureMetadataOutput()
         
-        if captureSession.canAddOutput(metadataOutput) {
+        if captureSession.canAddOutput(metadataOutput){
             captureSession.addOutput(metadataOutput)
             
-            metadataOutput.setMetadataObjectsDelegate(self, queue: .main)
-            metadataOutput.metadataObjectTypes = [.qr, .ean8, .ean13]
+            metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            metadataOutput.metadataObjectTypes = [.ean8, .ean13] // Estos ean8 y 13 son como los codigos para codigo de barras
         } else {
-            scannerDelegate?.surface(.invalidScannedValue)
             return
         }
         
-        guard var previewLayer else { return }
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.videoGravity = .resizeAspectFill
-        view.layer.addSublayer(previewLayer)
+        previewLayer!.videoGravity = .resizeAspectFill
+        view.layer.addSublayer(previewLayer!)
         
         captureSession.startRunning()
     }
@@ -81,14 +90,15 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 
 extension ScannerViewController {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        guard let machineReadableCodeObject = metadataObjects.first as? AVMetadataMachineReadableCodeObject else {
-            scannerDelegate?.surface(.invalidScannedValue)
-            return
-        }
-        guard let barcode = machineReadableCodeObject.stringValue else {
+        guard let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject else {
+            scannerDelegate?.surface( .invalidScannedValue)
+            return }
+        guard let machineReadableCodeObject = object as? AVMetadataMachineReadableCodeObject else {
             scannerDelegate?.surface(.invalidDeviceInput)
-            return
-        }
+            return }
+        guard let barcode = machineReadableCodeObject.stringValue else {
+            scannerDelegate?.surface( .invalidDeviceInput)
+            return }
         captureSession.stopRunning()
         scannerDelegate?.find(barcode)
     }

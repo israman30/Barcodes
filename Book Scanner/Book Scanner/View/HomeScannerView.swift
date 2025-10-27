@@ -48,19 +48,24 @@ struct HomeScannerView: View {
     @State private var scannedCodeString = ""
     
     var body: some View {
-        VStack {
-            Label("Scanned Code: \(scannedCodeString)", image: scannedCodeString.isEmpty ? "barcode.viewfinder" : "barcode")
-                .contentTransition(.symbolEffect(.replace))
-                .font(.title2)
-                .fontDesign(.rounded)
-                .fontWeight(.bold)
-                .padding()
-            
-            Text(scannedCodeString.isEmpty ? "No Code Found" : scannedCodeString)
-                .font(.largeTitle)
-                .fontDesign(.rounded)
-                .fontWeight(.light)
-                .foregroundStyle(scannedCodeString.isEmpty ? .red : .green)
+        NavigationView {
+            VStack {
+                ScannerView(scannedCode: $scannedCodeString)
+                    .frame(maxWidth: 300, minHeight: 20, maxHeight: 250)
+                Label("", image: scannedCodeString.isEmpty ? "barcode.viewfinder" : "barcode")
+                    .contentTransition(.symbolEffect(.replace))
+                    .font(.title2)
+                    .fontDesign(.rounded)
+                    .fontWeight(.bold)
+                    .padding()
+                
+                Text(scannedCodeString.isEmpty ? "No Code Found" : scannedCodeString)
+                    .font(.largeTitle)
+                    .fontDesign(.rounded)
+                    .fontWeight(.light)
+                    .foregroundStyle(scannedCodeString.isEmpty ? .red : .green)
+            }
+            .navigationTitle("Barcode")
         }
     }
 }
