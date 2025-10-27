@@ -20,6 +20,7 @@
 		4D8EE8AC2BE0669C00E5BD28 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8EE8AB2BE0669C00E5BD28 /* BarcodeScanner.swift */; };
 		4D8EE8AF2BE0797100E5BD28 /* BookScanner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4D8EE8AD2BE0797100E5BD28 /* BookScanner.xcdatamodeld */; };
 		4D8EE8B12BE07BC200E5BD28 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8EE8B02BE07BC200E5BD28 /* DataController.swift */; };
+		4DA04C412EAF2347009203A5 /* HomeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA04C402EAF2347009203A5 /* HomeScannerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		4D8EE8AB2BE0669C00E5BD28 /* BarcodeScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
 		4D8EE8AE2BE0797100E5BD28 /* BookScanner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BookScanner.xcdatamodel; sourceTree = "<group>"; };
 		4D8EE8B02BE07BC200E5BD28 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		4DA04C402EAF2347009203A5 /* HomeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScannerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		4D6B458D2B1B7888003ABCAC /* Book Scanner */ = {
 			isa = PBXGroup;
 			children = (
+				4DA04C422EAF2364009203A5 /* View */,
 				4D6B45BB2B1BB910003ABCAC /* Book-Scanner-Info.plist */,
 				4D6B458E2B1B7888003ABCAC /* Book_ScannerApp.swift */,
 				4D6B45902B1B7888003ABCAC /* ContentView.swift */,
@@ -145,6 +148,14 @@
 				4D6B45AB2B1B7889003ABCAC /* Book_ScannerUITestsLaunchTests.swift */,
 			);
 			path = "Book ScannerUITests";
+			sourceTree = "<group>";
+		};
+		4DA04C422EAF2364009203A5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4DA04C402EAF2347009203A5 /* HomeScannerView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DA04C412EAF2347009203A5 /* HomeScannerView.swift in Sources */,
 				4D8EE8AA2BE0666100E5BD28 /* SearchBookManager.swift in Sources */,
 				4D8EE8AF2BE0797100E5BD28 /* BookScanner.xcdatamodeld in Sources */,
 				4D8EE8A82BE0662E00E5BD28 /* Book.swift in Sources */,
