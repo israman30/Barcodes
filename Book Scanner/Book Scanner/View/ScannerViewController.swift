@@ -78,3 +78,18 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         captureSession.startRunning()
     }
 }
+
+extension ScannerViewController {
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        guard let machineReadableCodeObject = metadataObjects.first as? AVMetadataMachineReadableCodeObject else {
+            scannerDelegate?.surface(.invalidScannedValue)
+            return
+        }
+        guard let barcode = machineReadableCodeObject.stringValue else {
+            scannerDelegate?.surface(.invalidDeviceInput)
+            return
+        }
+        captureSession.stopRunning()
+        scannerDelegate?.find(barcode)
+    }
+}
