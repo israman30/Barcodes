@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+struct HomeScannerView: View {
+    var body: some View {
+        Text("Hello, World!")
+    }
+}
+
 struct ContentView: View {
     
     @State var isPresented = false
@@ -50,7 +56,7 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    HomeScannerView()
 }
 
 
