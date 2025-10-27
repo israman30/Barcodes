@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+//struct ScannerView: UIViewControllerRepresentable {
+//    @Binding var scannedCode: String
+//    
+//    func makeUIViewController(context: Context) -> some UIViewController {
+//        <#code#>
+//    }
+//}
+
 struct HomeScannerView: View {
     
     @State private var scannedCodeString = ""
