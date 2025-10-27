@@ -7,13 +7,41 @@
 
 import SwiftUI
 
-//struct ScannerView: UIViewControllerRepresentable {
-//    @Binding var scannedCode: String
-//    
-//    func makeUIViewController(context: Context) -> some UIViewController {
-//        <#code#>
-//    }
-//}
+struct ScannerView: UIViewControllerRepresentable {
+    @Binding var scannedCode: String
+    
+    func makeUIViewController(context: Context) -> ScannerViewController {
+        ScannerViewController(scannerDelegate: context.coordinator)
+    }
+    
+    func updateUIViewController(_ uiViewController: ScannerViewController, context: Context) {
+        
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(scannerView: self)
+    }
+    
+    class Coordinator: NSObject, ScannerProtocol {
+        private var scannerView: ScannerView
+        
+        init(scannerView: ScannerView) {
+            self.scannerView = scannerView
+        }
+        
+        func didCaptureCode(_ code: String) {
+            scannerView.scannedCode = code
+        }
+        
+        func find(_ barcode: String) {
+            scannerView.scannedCode = barcode
+        }
+        
+        func surface(_ error: CameraError) {
+            print(error)
+        }
+    }
+}
 
 struct HomeScannerView: View {
     
