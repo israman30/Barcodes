@@ -21,7 +21,7 @@ protocol ScannerProtocol: AnyObject {
 class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     let captureSession = AVCaptureSession()
-    var previewLayer: AVCaptureVideoPreviewLayer?
+    var previewLayer: AVCaptureVideoPreviewLayer!
     var videoInput: AVCaptureDeviceInput!
     weak var scannerDelegate: ScannerProtocol?
     
@@ -72,18 +72,17 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         
         let metadataOutput = AVCaptureMetadataOutput()
         
-        if captureSession.canAddOutput(metadataOutput){
+        if captureSession.canAddOutput(metadataOutput) {
             captureSession.addOutput(metadataOutput)
-            
-            metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            metadataOutput.metadataObjectTypes = [.ean8, .ean13] // Estos ean8 y 13 son como los codigos para codigo de barras
+            metadataOutput.setMetadataObjectsDelegate(self, queue: .main)
+            metadataOutput.metadataObjectTypes = [.ean8, .ean13, .qr] // This ean8 y 13 barcodes
         } else {
             return
         }
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer!.videoGravity = .resizeAspectFill
-        view.layer.addSublayer(previewLayer!)
+        previewLayer.videoGravity = .resizeAspectFill
+        view.layer.addSublayer(previewLayer)
         
         captureSession.startRunning()
     }
