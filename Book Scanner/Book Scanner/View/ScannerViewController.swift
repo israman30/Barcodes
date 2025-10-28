@@ -111,8 +111,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         } catch {
             print("Could not lock device for configuration: \(error.localizedDescription)")
         }
-        
-        
     }
 }
 
@@ -120,13 +118,12 @@ extension ScannerViewController {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         guard let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject else {
             scannerDelegate?.surface( .invalidScannedValue)
-            return }
-        guard let machineReadableCodeObject = object as? AVMetadataMachineReadableCodeObject else {
-            scannerDelegate?.surface(.invalidDeviceInput)
-            return }
-        guard let barcode = machineReadableCodeObject.stringValue else {
+            return
+        }
+        guard let barcode = object.stringValue else {
             scannerDelegate?.surface( .invalidDeviceInput)
-            return }
+            return
+        }
         captureSession.stopRunning()
         scannerDelegate?.find(barcode)
     }
