@@ -22,6 +22,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     
     let captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
+    var videoInput: AVCaptureDeviceInput!
     weak var scannerDelegate: ScannerProtocol?
     
     init(scannerDelegate: ScannerProtocol) {
@@ -36,6 +37,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCaptureSession()
+        addGetureRecognizers()
     }
     
     override func viewDidLayoutSubviews() {
@@ -53,7 +55,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             scannerDelegate?.surface(.invalidDeviceInput)
             return
         }
-        let videoInput: AVCaptureDeviceInput
         
         do {
             try videoInput = AVCaptureDeviceInput(device: videoCaptureDevice)
@@ -86,6 +87,34 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         
         captureSession.startRunning()
     }
+    
+    func addGetureRecognizers() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapFocus))
+        view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func handleTapFocus(_ gesture: UITapGestureRecognizer) {
+        let pointView = gesture.location(in: view)
+        guard let pointInCamera = previewLayer?.captureDevicePointConverted(fromLayerPoint: pointView) else { return }
+        
+        let videoDevice = videoInput.device
+        do {
+            try videoDevice.lockForConfiguration()
+            
+            if videoDevice.isFocusPointOfInterestSupported {
+                videoDevice.focusPointOfInterest = pointInCamera
+            }
+            
+            if videoDevice.isFocusModeSupported(.autoFocus) {
+                videoDevice.focusMode = .autoFocus
+            }
+            videoDevice.unlockForConfiguration()
+        } catch {
+            print("Could not lock device for configuration: \(error.localizedDescription)")
+        }
+        
+        
+    }
 }
 
 extension ScannerViewController {
@@ -103,3 +132,4 @@ extension ScannerViewController {
         scannerDelegate?.find(barcode)
     }
 }
+
