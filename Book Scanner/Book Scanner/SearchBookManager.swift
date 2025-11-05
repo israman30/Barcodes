@@ -11,7 +11,7 @@ import AVFoundation
 
 final class SearchBookManager {
     
-    static let shred = SearchBookManager()
+    static let shared = SearchBookManager()
     
     func search(isbn: String, completion: @escaping (Books) -> Void) {
         

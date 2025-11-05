@@ -87,7 +87,7 @@ struct BarCodeScanner: UIViewControllerRepresentable {
             parent.isbn = isbn
             
             // Search Book manager
-            SearchBookManager.shred.search(isbn: isbn) { [weak self] books in
+            SearchBookManager.shared.search(isbn: isbn) { [weak self] books in
                 DispatchQueue.main.async {
                     if let self {
                         self.parent.foundBooks = books

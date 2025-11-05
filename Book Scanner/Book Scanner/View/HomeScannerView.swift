@@ -46,6 +46,9 @@ struct ScannerView: UIViewControllerRepresentable {
 struct HomeScannerView: View {
     
     @State private var scannedCodeString = ""
+    @State private var bookList: Books?
+    
+    var searchBookScanner: SearchBookManager = .shared
     
     var body: some View {
         NavigationView {
@@ -65,7 +68,16 @@ struct HomeScannerView: View {
                     .fontWeight(.light)
                     .foregroundStyle(scannedCodeString.isEmpty ? .red : .green)
             }
+            .onAppear {
+                searchBook()
+            }
             .navigationTitle("Barcode")
+        }
+    }
+    
+    func searchBook() {
+        searchBookScanner.search(isbn: scannedCodeString) { result in
+            print("Found", result.items.first!.volumeInfo.title)
         }
     }
 }
